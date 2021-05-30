@@ -14,7 +14,7 @@ import (
 
 func main() {
 	fmt.Println("OMI AUTO TEST TOOL...")
-	fmt.Println("請選擇要執行function 1. 操作截圖 2. open csv")
+	fmt.Println("請選擇要執行function 1. 操作截圖 2. open csv 3. 啟動固定視窗")
 
 	var a int
 	fmt.Scanln(&a)
@@ -26,6 +26,30 @@ func main() {
 		robotgo.KeyTap("f2", "shift")
 	case 2:
 		ReadCsv()
+	case 3:
+		prodcessIds := "notepad.exe"
+		fpid, err := robotgo.FindIds(prodcessIds)
+
+		if err == nil {
+			fmt.Printf("find  %d\n", fpid[0])
+			robotgo.ActivePID(fpid[0])
+
+			mdata := robotgo.GetActive()
+			robotgo.SetActive(mdata)
+
+			tl := robotgo.GetTitle(fpid[0])
+			fmt.Printf("title is: %s\n", tl)
+
+			// robotgo.MaxWindow(fpid[0])
+			// robotgo.MinWindow(fpid[0])
+			// robotgo.Sleep(1)
+
+			x, y, w, h := robotgo.GetBounds(fpid[0])
+			fmt.Println("GetBounds is: ", x, y, w, h)
+			bit1 := robotgo.CaptureScreen(x, y, w, h)
+			robotgo.SaveBitmap(bit1, "test2.png")
+
+		}
 	default:
 	}
 
