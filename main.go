@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"os/exec"
 	"strconv"
 	"strings"
 
@@ -27,29 +28,40 @@ func main() {
 	case 2:
 		ReadCsv()
 	case 3:
-		prodcessIds := "notepad.exe"
-		fpid, err := robotgo.FindIds(prodcessIds)
+		datapath := `C:\Program Files (x86)\Google\Chrome\Application\chrome.exe`
+		exec.Command(datapath).Start()
 
-		if err == nil {
-			fmt.Printf("find  %d\n", fpid[0])
-			robotgo.ActivePID(fpid[0])
+		robotgo.Sleep(3)
+		mdata := robotgo.GetActive()
+		// set Window Active
+		robotgo.SetActive(mdata)
+		robotgo.TypeString("pu369")
+		robotgo.KeyTap("space")
+		robotgo.TypeString("golang")
+		robotgo.KeyTap("enter")
+		robotgo.MilliSleep(5 * 1000)
 
-			mdata := robotgo.GetActive()
-			robotgo.SetActive(mdata)
+		// prodcessIds := "notepad.exe"
 
-			tl := robotgo.GetTitle(fpid[0])
-			fmt.Printf("title is: %s\n", tl)
+		// fpid, err := robotgo.FindIds(prodcessIds)
 
-			// robotgo.MaxWindow(fpid[0])
-			// robotgo.MinWindow(fpid[0])
-			// robotgo.Sleep(1)
+		// if err == nil {
+		// 	fmt.Printf("find  %d\n", fpid[0])
+		// 	robotgo.ActivePID(fpid[0])
 
-			x, y, w, h := robotgo.GetBounds(fpid[0])
-			fmt.Println("GetBounds is: ", x, y, w, h)
-			bit1 := robotgo.CaptureScreen(x, y, w, h)
-			robotgo.SaveBitmap(bit1, "test2.png")
+		// 	tl := robotgo.GetTitle(fpid[0])
+		// 	fmt.Printf("title is: %s\n", tl)
 
-		}
+		// 	// robotgo.MaxWindow(fpid[0])
+		// 	// robotgo.MinWindow(fpid[0])
+		// 	// robotgo.Sleep(1)
+
+		// 	x, y, w, h := robotgo.GetBounds(fpid[0])
+		// 	fmt.Println("GetBounds is: ", x, y, w, h)
+		// 	bit1 := robotgo.CaptureScreen(x, y, w, h)
+		// 	robotgo.SaveBitmap(bit1, "test2.png")
+
+		// }
 	default:
 	}
 
