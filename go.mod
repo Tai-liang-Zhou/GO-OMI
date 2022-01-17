@@ -3,6 +3,6 @@ module tlchoud.com/go-keyboard
 go 1.16
 
 require (
-	github.com/go-vgo/robotgo v0.93.1
-	gobot.io/x/gobot v1.15.0 // indirect
+	github.com/audrenbdb/goforeground v0.0.0-20210830075403-565706399b5c // indirect
+	github.com/go-vgo/robotgo v0.100.10
 )

@@ -6,64 +6,71 @@ import (
 	"io"
 	"log"
 	"os"
-	"os/exec"
 	"strconv"
 	"strings"
 
+	"github.com/audrenbdb/goforeground"
 	"github.com/go-vgo/robotgo"
 )
 
 func main() {
 	fmt.Println("OMI AUTO TEST TOOL...")
-	fmt.Println("請選擇要執行function 1. 操作截圖 2. open csv 3. 啟動固定視窗")
 
-	var a int
-	fmt.Scanln(&a)
-	switch a {
-	case 1:
-		robotgo.MoveMouse(762, 1425)
-		robotgo.MouseClick()
-		robotgo.Sleep(1)
-		robotgo.KeyTap("f2", "shift")
-	case 2:
-		ReadCsv()
-	case 3:
-		datapath := `C:\Program Files (x86)\Google\Chrome\Application\chrome.exe`
-		exec.Command(datapath).Start()
+	// datapath := `E:\MegaDownloader_v1.8_bin\MegaDownloader.exe`
+	// fmt.Println(datapath)
+	// exec.Command(datapath).Start()
 
-		robotgo.Sleep(3)
-		mdata := robotgo.GetActive()
-		// set Window Active
-		robotgo.SetActive(mdata)
-		robotgo.TypeString("pu369")
-		robotgo.KeyTap("space")
-		robotgo.TypeString("golang")
-		robotgo.KeyTap("enter")
-		robotgo.MilliSleep(5 * 1000)
-
-		// prodcessIds := "notepad.exe"
-
-		// fpid, err := robotgo.FindIds(prodcessIds)
-
-		// if err == nil {
-		// 	fmt.Printf("find  %d\n", fpid[0])
-		// 	robotgo.ActivePID(fpid[0])
-
-		// 	tl := robotgo.GetTitle(fpid[0])
-		// 	fmt.Printf("title is: %s\n", tl)
-
-		// 	// robotgo.MaxWindow(fpid[0])
-		// 	// robotgo.MinWindow(fpid[0])
-		// 	// robotgo.Sleep(1)
-
-		// 	x, y, w, h := robotgo.GetBounds(fpid[0])
-		// 	fmt.Println("GetBounds is: ", x, y, w, h)
-		// 	bit1 := robotgo.CaptureScreen(x, y, w, h)
-		// 	robotgo.SaveBitmap(bit1, "test2.png")
-
-		// }
-	default:
+	// robotgo.Sleep(4)
+	fpid, err := robotgo.FindIds("Chrome.exe")
+	if err != nil {
+		fmt.Println(err)
 	}
+	fzname, err := robotgo.FindName(fpid[0])
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(fzname)
+	goforeground.Activate(int(fpid[0]))
+	robotgo.Sleep(1)
+
+	// robotgo.ActivePID(fpid[0])
+
+	// robotgo.MaxWindow(fpid[0])
+	// mdata := robotgo.GetActive()
+	// // set Window Active
+	// robotgo.SetActive(mdata)
+	// robotgo.TypeString("pu369")
+	// robotgo.KeyTap("space")
+	// robotgo.TypeString("golang")
+	// robotgo.KeyTap("enter")
+	// robotgo.MilliSleep(6 * 1000)
+
+	x, y, w, h := robotgo.GetBounds(fpid[0])
+	fmt.Println("GetBounds is: ", x, y, w, h)
+	bit1 := robotgo.CaptureScreen(x, y, w, h)
+	robotgo.SaveBitmap(bit1, "test2.png")
+
+	// prodcessIds := "notepad.exe"
+
+	// fpid, err := robotgo.FindIds(prodcessIds)
+
+	// if err == nil {
+	// 	fmt.Printf("find  %d\n", fpid[0])
+	// 	robotgo.ActivePID(fpid[0])
+
+	// 	tl := robotgo.GetTitle(fpid[0])
+	// 	fmt.Printf("title is: %s\n", tl)
+
+	// 	// robotgo.MaxWindow(fpid[0])
+	// 	// robotgo.MinWindow(fpid[0])
+	// 	// robotgo.Sleep(1)
+
+	// 	x, y, w, h := robotgo.GetBounds(fpid[0])
+	// 	fmt.Println("GetBounds is: ", x, y, w, h)
+	// 	bit1 := robotgo.CaptureScreen(x, y, w, h)
+	// 	robotgo.SaveBitmap(bit1, "test2.png")
+
+	// }
 
 }
 
