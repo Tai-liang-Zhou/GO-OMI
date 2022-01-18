@@ -21,7 +21,7 @@ func main() {
 	// exec.Command(datapath).Start()
 
 	// robotgo.Sleep(4)
-	fpid, err := robotgo.FindIds("Chrome.exe")
+	fpid, err := robotgo.FindIds("chrome.exe")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -29,9 +29,11 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(fzname)
+	fmt.Println(fzname, fpid[0])
 	goforeground.Activate(int(fpid[0]))
-	robotgo.Sleep(1)
+	robotgo.Sleep(2)
+	robotgo.MaxWindow(fpid[0])
+	robotgo.Sleep(2)
 
 	// robotgo.ActivePID(fpid[0])
 
@@ -45,11 +47,22 @@ func main() {
 	// robotgo.KeyTap("enter")
 	// robotgo.MilliSleep(6 * 1000)
 
-	x, y, w, h := robotgo.GetBounds(fpid[0])
-	fmt.Println("GetBounds is: ", x, y, w, h)
-	bit1 := robotgo.CaptureScreen(x, y, w, h)
-	robotgo.SaveBitmap(bit1, "test2.png")
+	// x, y, w, h := robotgo.GetBounds(fpid[0])
+	// fmt.Println("GetBounds is: ", x, y, w, h)
+	// bit1 := robotgo.CaptureScreen(x, y, w, h)
+	// robotgo.SaveBitmap(bit1, "test2.png")
 
+	// fbbitmap := robotgo.OpenBitmap("apple.png")
+	fx, fy := robotgo.FindPic("apple.png")
+	fmt.Println("FindBitmap------ ", fx, fy)
+	sR := robotgo.GetScreenRect()
+	fmt.Println(sR.H, sR.W, sR.X, sR.Y)
+	robotgo.MoveSmooth(fx-1920, fy, 1.0, 3.0, 2)
+
+	// if found := robotgo.AddEvent("g"); found {
+	// 	mx, my := robotgo.GetMousePos()
+	// 	fmt.Println(mx, my)
+	// }
 	// prodcessIds := "notepad.exe"
 
 	// fpid, err := robotgo.FindIds(prodcessIds)
